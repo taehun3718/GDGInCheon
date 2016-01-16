@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<pattern>
+				[%-5level] %d{HH:mm:ss.SSS} [%thread] %logger[%method:%line] -%msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="file" class="ch.qos.logback.core.FileAppender">
+		<file>/www/apache-tomcat-7.0.67/weblog/webLog.log</file>
+		<encoder>
+			<pattern>
+				[%-5level] %d{HH:mm:ss.SSS} [%thread] %logger[%method:%line] -%msg%n
+			</pattern>
+		</encoder>
+	</appender>
+	
+	<appender name="fileForDateTime" 
+			class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>/www/apache-tomcat-7.0.67/weblog/webLog.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>/www/apache-tomcat-7.0.67/weblog/webLog-%d{yyyy-MM-dd-HH}.log</fileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy
+         			 class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+		      <!-- or whenever the file size reaches 100MB -->
+		      <maxFileSize>100MB</maxFileSize>
+		    </timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+		<encoder>
+			<pattern>
+				[%-5level] %d{HH:mm:ss} %logger[%method:%line] -%msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<logger name="org.springframework" level="info" />
+	<logger name="com.mchange" level="info" />
+	
+	<root level="info">
+		<appender-ref ref="console" />
+		<!--  <appender-ref ref="file" /> -->
+		<appender-ref ref="fileForDateTime" />
+	</root>
+	
+</configuration>
