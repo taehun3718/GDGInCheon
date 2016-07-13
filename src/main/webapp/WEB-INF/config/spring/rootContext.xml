@@ -18,7 +18,8 @@
 	<bean 	id="dataSource"
 			class="com.mchange.v2.c3p0.ComboPooledDataSource">
 		<property name="driverClass" value="net.sf.log4jdbc.DriverSpy" />
-		<property name="jdbcUrl" value="jdbc:mysql://192.168.137.111:3306/ssbr_management" />
+		<property name="jdbcUrl" value="jdbc:log4jdbc:mysql://192.168.137.111:13306/ssbr_management?autoReconnect=true" />
+		<property name="checkoutTimeout" value="15000"/>
 		<property name="user" value="root" />
 		<property name="password" value="system" />
 	</bean> 

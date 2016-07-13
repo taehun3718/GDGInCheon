@@ -9,6 +9,7 @@
 <title>Update Server beta 1.0</title>
 <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
 </head>
+<h1>${MemberVO.id}/ ${MemberVO.memberInfo} / ${MemberVO.name }</h1>
 <h1>백신 업데이트 정보</h1>
 <body>
 	<table class="table table-bordered table-hover table-striped" border='1'>

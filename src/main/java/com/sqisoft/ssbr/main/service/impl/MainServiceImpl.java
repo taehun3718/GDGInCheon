@@ -13,13 +13,15 @@ public class MainServiceImpl implements MainService{
 		this.mainBiz = mainBiz;
 	}
 
+	/**DB 커넥션 확인용 메소드**/
 	@Override
 	public ModelAndView mainView() {
 		ModelAndView view = new ModelAndView("main/index");
 		view.addObject("TIME", mainBiz.getMysqlServerTime());
 		return view;
 	}
-
+	
+	/**DB 커넥션 확인용 메소드: 시간을 얻어온다.**/
 	@Override
 	public String getMysqlServerTime() {
 		return mainBiz.getMysqlServerTime();

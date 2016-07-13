@@ -3,10 +3,16 @@
 				"http://mybatis.org/dtd/mybatis-3-config.dtd">
 				
 <configuration>
-	<!-- <typeAliases>
-		<typeAlias alias="BoardVO" type="com.ktds.christof_kim.bbs.vo.BoardVO"/>
-	</typeAliases>-->
+
+	<typeAliases>
+		<typeAlias alias="MemberVO" type="com.sqisoft.ssbr.member.vo.MemberVO"/>
+		<typeAlias alias="EngineerVO" type="com.sqisoft.ssbr.member.vo.EngineerVO"/>
+	</typeAliases>
+	
 	<mappers>
 		<mapper resource="/com/sqisoft/ssbr/main/dao/impl/sql/mainDAO.xml" />
+		<mapper resource="/com/sqisoft/ssbr/member/dao/impl/sql/memberDAO.xml" />
+		<mapper resource="/com/sqisoft/ssbr/board/dao/impl/sql/boardDAO.xml" />
 	</mappers>
+	
 </configuration>

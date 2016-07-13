@@ -14,10 +14,18 @@
 					mapping="/js/**" />
 	<mvc:resources 	location="/WEB-INF/static/css/" 
 					mapping="/css/**" />
-	<mvc:resources 	location="/WEB-INF/static/image/" 
-					mapping="/image/**" />
-					<mvc:resources 	location="/WEB-INF/static/bower_components/" 
+	<mvc:resources 	location="/WEB-INF/static/images/" 
+					mapping="/images/**" />
+	<mvc:resources 	location="/WEB-INF/static/fonts/" 
+					mapping="/fonts/**" />
+					
+					
+					
+	<mvc:resources 	location="/WEB-INF/static/bower_components/" 
 					mapping="/bower_components/**" />
+	<mvc:resources 	location="/WEB-INF/static/login_asset/assets/" 
+					mapping="/assets/**" />				
+					
 	
 	<!-- viewResolver -->
 	
@@ -34,38 +42,55 @@
 		<property name="defaultEncoding" value="UTF-8"/>
 	</bean>
 	
-	<!-- Main  -->
 	<bean	id="mainController"
 			class="com.sqisoft.ssbr.main.web.MainController">
 			<!--name:class setterMethod ref:reference bean Id(param) -->
 			<property name="mainService" ref="mainService"/>
+			<property name="memberService" ref="memberService"/>
 	</bean>
 	
-	<bean	id="mainService"
-			class="com.sqisoft.ssbr.main.service.impl.MainServiceImpl">
-			<property name="mainBiz" ref="mainBiz"/>
-	</bean>
-	
-	<bean	id="mainBiz"
-			class="com.sqisoft.ssbr.main.biz.impl.MainBizImpl">
-			<property name="mainDAO" ref="mainDAO"/>
-	</bean>
-	
-	<bean	id="mainDAO"
-			class="com.sqisoft.ssbr.main.dao.impl.MainDAOImpl">
-			<property name="sqlSessionTemplate" ref="sqlSessionTemplate"/>
-	</bean>
-	
-	<!--Download-->
-	
-	<bean	id="virusDownloadController"
-			class="com.sqisoft.ssbr.download.web.VirusDownloadController">
+	<bean	id="boardController"
+			class="com.sqisoft.ssbr.board.web.BoardController">
 			<!--name:class setterMethod ref:reference bean Id(param) -->
-			<property name="virusDownloadService" ref="virusDownloadService"/>
+			<property name="boardService" ref="boardService"/>
 	</bean>
 	
-	<bean	id="virusDownloadService"
-			class="com.sqisoft.ssbr.download.service.impl.VirusDownloadServiceImpl">
+	
+
+	<mvc:interceptors>
+		<bean	id="measuringInterceptor"
+					class="com.sqisoft.ssbr.common.interceptor.MeasuringInterceptor"/>
+	</mvc:interceptors>
+	
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**/download/eziscan"/><!--이페이지는 예외 로그인 체크를 함  -->
+			<mvc:exclude-mapping path="/login"/>
+			<bean	id="loginInterceptor"
+					class="com.sqisoft.ssbr.common.interceptor.LoginInterceptor"/>
+
+		</mvc:interceptor>
+	</mvc:interceptors>
+	
+	<!--Error Handling-->
+	<bean	id="errorController"
+			class="com.sqisoft.ssbr.common.error.ErrorController">
 	</bean>
+	
+	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"/>
 	
 </beans>
+<!-- 
+<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**/vMain"/>
+			<mvc:mapping path="/**/ssbizMain"/>
+			<mvc:mapping path="/**/download/eziscan"/>
+			<mvc:exclude-mapping path="/login"/>
+			<bean	id="loginInterceptor"
+					class="com.sqisoft.ssbr.common.interceptor.LoginInterceptor"/>
+
+		</mvc:interceptor>
+	</mvc:interceptors>
+
+ -->
