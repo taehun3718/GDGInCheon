@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+				"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+				
+<mapper namespace="memberDAO">
+	
+	<select id="sample" resultType="string">
+		SELECT curtime();
+	</select>
+	
+	<resultMap type="MemberVO" id="loginMap">
+		<id property="id"					column="id_pk"/>
+		<result property="name"				column="name"/>
+		<result property="pwd"				column="pwd"/>
+		<result property="memberInfo"		column="memberInfo"/>
+		<result property="isDeleteYN"		column="isDeleteYN"/>
+
+	</resultMap>
+	
+	<select id="login" parameterType="MemberVO" resultMap="loginMap">
+		SELECT	id_pk
+				, name
+				, pwd
+				, memberInfo
+				, isDeleteYN
+		FROM	MemberInfo
+		WHERE	id_pk = #{id}
+		AND		pwd = #{pwd}
+	</select>
+</mapper>

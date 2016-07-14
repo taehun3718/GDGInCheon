@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+				"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+				
+<mapper namespace="boardDAO">
+	
+	<select id="engineerList" parameterType="EngineerVO" resultMap="engineerMap">
+		SELECT	eng_seqNo
+				, eng_id
+				, eng_nm
+				, eng_rank
+				, eng_crdt
+		FROM	ENG_MGNT
+	</select>
+	
+	<resultMap type="EngineerVO" id="engineerMap">
+		<result property="eng_seqNo"		column="eng_seqNo"/>
+		<result property="eng_id"			column="eng_id"/>
+		<result property="eng_nm"			column="eng_nm"/>
+		<result property="eng_rank"			column="eng_rank"/>
+		<result property="eng_crdt"			column="eng_crdt"/>
+	</resultMap>
+	
+	<select id="checkDuplicateUserID"
+			parameterType="string"
+			resultType="_int">
+		SELECT	COUNT(1)
+		FROM	ENG_MGNT
+		WHERE	eng_id = #{eng_id}	
+	</select>
+	
+	
+</mapper>
