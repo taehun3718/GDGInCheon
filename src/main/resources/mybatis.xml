@@ -7,12 +7,17 @@
 	<typeAliases>
 		<typeAlias alias="MemberVO" type="com.sqisoft.ssbr.member.vo.MemberVO"/>
 		<typeAlias alias="EngineerVO" type="com.sqisoft.ssbr.member.vo.EngineerVO"/>
+		<typeAlias alias="EngineerSearchVO" type="com.sqisoft.ssbr.member.vo.EngineerSearchVO"/>
+		<typeAlias alias="InventorySearchVO" type="com.sqisoft.ssbr.inventory.vo.InventorySearchVO"/>
+		<typeAlias alias="InventoryCategoryVO" type="com.sqisoft.ssbr.inventory.vo.InventoryCategoryVO"/>
+		<typeAlias alias="InventoryInfoVO" type="com.sqisoft.ssbr.inventory.vo.InventoryInfoVO"/>
 	</typeAliases>
 	
 	<mappers>
 		<mapper resource="/com/sqisoft/ssbr/main/dao/impl/sql/mainDAO.xml" />
 		<mapper resource="/com/sqisoft/ssbr/member/dao/impl/sql/memberDAO.xml" />
 		<mapper resource="/com/sqisoft/ssbr/board/dao/impl/sql/boardDAO.xml" />
+		<mapper resource="/com/sqisoft/ssbr/inventory/dao/impl/sql/inventoryDAO.xml" />
 	</mappers>
 	
 </configuration>

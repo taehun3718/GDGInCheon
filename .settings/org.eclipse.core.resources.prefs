@@ -1,4 +1,11 @@
 eclipse.preferences.version=1
 encoding//src/main/java/com/sqisoft/ssbr/common/interceptor/MeasuringInterceptor.java=UTF-8
+encoding//src/main/java/com/sqisoft/ssbr/inventory/readme-inventory.md=UTF-8
+encoding//src/main/java/com/sqisoft/ssbr/inventory/service/InventoryService.java=UTF-8
+encoding//src/main/java/com/sqisoft/ssbr/inventory/vo/InventoryInfoVO.java=UTF-8
+encoding//src/main/java/com/sqisoft/ssbr/inventory/vo/InventorySearchVO.java=UTF-8
+encoding//src/main/java/com/sqisoft/ssbr/inventory/web/InventoryController.java=UTF-8
 encoding//src/main/java/com/sqisoft/ssbr/util/AjaxUtil.java=UTF-8
 encoding//src/main/webapp/WEB-INF/view/login/login.jsp=UTF-8
+encoding/<project>=UTF-8
+separateDerivedEncodings=true

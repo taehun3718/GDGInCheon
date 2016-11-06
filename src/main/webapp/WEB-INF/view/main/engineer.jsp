@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -28,8 +28,6 @@
 
 <script src="js/jquery.js"></script>
 <script src="js/bootstrap.min.js"></script>
-<script type="text/javascript"
-	src="https://cdn.datatables.net/v/bs-3.3.6/dt-1.10.12/datatables.min.js"></script>
 
 <link rel="stylesheet" type="text/css"
 	href="https://cdn.datatables.net/v/bs/dt-1.10.12/datatables.min.css" />
@@ -44,7 +42,20 @@ $.extend(true, $.fn.dataTable.defaults, {
 });
 
 $(document).ready(function() {
+	console.log("rdy");
 	var isReadyToRegist = false;
+	var searchKeyword = "${engineerSearchVO.searchKeyword}";
+	$("#keyword").val(searchKeyword);
+	
+	$("#searchBtn").click(function() {
+		
+		
+		$("#searchForm").attr("action", "<c:url value="/ssBizEngineer"/>");
+		$("#searchForm").attr("method", "POST");
+		$("#searchForm").submit();
+	});
+	
+	
 	
 	$("#myBtn").click(function() {
 		$("#registModal").modal();
@@ -75,7 +86,9 @@ $(document).ready(function() {
 	});
 	
 	$(".btn-success").click(function() {
-		if(validationCheck()==true && isReadyToRegist==true) {
+		var isValidData = validationCheck();
+		
+		if(isValidData && isReadyToRegist==true) {
 			if(confirm("해당 엔지니어를 등록하시겠습니까?")==true){
 				//등록 로직 후 DB에 넣기
 				$("#engineerForm").attr("action",	"<c:url value="/ssBizEngineer/doRegistEngineer"/>");
@@ -83,7 +96,7 @@ $(document).ready(function() {
 				$("#engineerForm").submit();
 			}
 		}
-		if(validationCheck()==true && isReadyToRegist==false) {
+		else if(isValidData && isReadyToRegist==false) {
 			alert("중복된 사용자 ID가 있습니다. ID를 다른 ID로 변경해주십시오.");
 			return;
 		}
@@ -126,17 +139,80 @@ $(document).ready(function() {
 });
 
 
+
 </script>
 
-
 </head>
+<style>
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+/* IE10+ CSS styles go here */
+	.css_1_select{
+	width:80px;
+	height:29px;
+	padding: 0px 0px 0px 0px;
+	}
+	.css_1_input{
+	width:300px;
+	height:29px;
+	padding: 0px 0px 0px 0px;
+	margin: 0px 0px 0px 0px;
+	}			
+	.css_1_btn{
+	width:60px;
+	height:29px;  
+	margin: 0px 0px 0px 0;
+	}
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  /* webkit specific styles go here */
+  	.css_1_select{
+	width:80px;
+	height:29px;
+	padding: 0px 0px 0px 0px;
+	}
+	
+	.css_1_input{
+	width:300px;
+	height:29px;
+	padding: 2px 0px 0px 0px;
+	}			
+	
+	.css_1_btn{
+	width:60px;
+	height:29px;  
+	margin: 0px 0px 2px 0;
+	}
+}
+</style>
 <!--/head-->
 <body>
 	<jsp:include page="./header/engineerHeader.jsp" flush="false" />
 <body id="body" class="white">
 
 	<div class="container">
-		<h2>엔지니어 관리</h2>
+		<form name="searchForm" id="searchForm" method="POST">
+			<select id="type" name="type" class="css_1_select selectpicker">
+			  <optgroup label="검색하고자 하는 타입을 선택해주세요.">
+			    <option value="1">이름</option>
+			    <option value="2">아이디</option>
+			  </optgroup>
+			</select>
+		
+		
+			<input	type="text" 
+					id="keyword" 
+					name="keyword" 
+					placeholder="검색어"
+					class="css_1_input input"
+					>
+			<button type="button" 
+					class="css_1_btn btn btn-sm" 
+					id="searchBtn"
+					>검색</button>
+		</form>
+					
+					
 		<div class="table-responsive">
 			
 			<table class="table table-hover sort">
@@ -149,7 +225,7 @@ $(document).ready(function() {
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach var="engineerList" items="${EngineerVO }">
+					<c:forEach var="engineerList" items="${engineerList.engineerList }">
 					<tr>
 						<td>${engineerList.eng_seqNo }</td>
 						<td>${engineerList.eng_nm }</td>
@@ -163,13 +239,14 @@ $(document).ready(function() {
 	</div>
 	<div class="container">
 		<ul class="pagination">
-		  <li><a href="#">« Prev</a></li>
+		${engineerList.paging.getPagingList("pageNo", "@", "이전", "다음", "")}<br/>
+		<!--   <li><a href="#">« Prev</a></li>
 		  <li><a href="#">1</a></li>
 		  <li><a href="#">2</a></li>
 		  <li><a href="#">3</a></li>
 		  <li><a href="#">4</a></li>
 		  <li><a href="#">5</a></li>
-		   <li><a href="#">Next »</a></li>
+		  <li><a href="#">Next »</a></li> -->
 		</ul>
 	</div>
 	<div class="container">
@@ -243,3 +320,31 @@ $(document).ready(function() {
 
 </body>
 </html>
+<!-- 
+파라미터를 get방식으로 넘길 때 한글 깨짐 현상이 발생한다..
+
+ 
+
+이것을 해결하기 위해서는  javascript에서는..
+
+ 
+
+[Encode]
+
+var mng_dept_en_nm = encodeURIComponent(myForm.mng_dept_nm.value);
+
+ 
+
+위와같이 encodeURLComponent(변수)을 사용하여 파라미터를 넘긴다
+
+ 
+
+[Decode]
+
+var mng_dept_de_nm = decodeURIComponent(myForm.mng_dept_nm.value);
+
+ 
+
+위와같이 decodeURLComponent(변수)을 사용한다.
+
+ -->

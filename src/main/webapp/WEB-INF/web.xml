@@ -41,15 +41,21 @@
   
   <filter>
 		<filter-name>encodingFilter</filter-name>
-		<filter-class>
+	<filter-class>
 			org.springframework.web.filter.CharacterEncodingFilter
-		</filter-class>
+	</filter-class>
 	
 	<init-param>
 		<param-name>encoding</param-name>
 		<param-value>UTF-8</param-value>
 	</init-param>
-	</filter>
+	<!-- 메모리 누수를 방지한다. http://mindasom.tistory.com/entry/Java-javalangOutOfMemoryError-PermGen-space -->
+	<init-param>
+  		<param-name>enablePooling</param-name>
+ 		<param-value>false</param-value>
+	</init-param>
+	
+</filter>
 	
 	<filter-mapping>
 		<filter-name>encodingFilter</filter-name>
@@ -85,7 +91,7 @@
   </context-param>
   
   <session-config>
-		<session-timeout>5</session-timeout>
+		<session-timeout>120</session-timeout>
 	</session-config>
 	
 

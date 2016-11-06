@@ -27,8 +27,6 @@ public class VirusDownloadServiceImpl implements VirusDownloadService {
 		response.setContentType("applicaton/download; charset=utf-8");
 		response.setContentLength((int)downloadFile.length());
 		
-		
-		// 사용자의 브라우저 종류를 가져온다
 		String userAgent = request.getHeader("User-Agent");
 		boolean isMsie = userAgent.indexOf("MSIE") > -1;
 		

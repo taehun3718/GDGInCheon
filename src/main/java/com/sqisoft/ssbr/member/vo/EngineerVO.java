@@ -8,7 +8,14 @@ public class EngineerVO {
 	private String eng_crdt;
 	private String eng_updt;
 	private String eng_pswd;
+	private int eng_total;
 	
+	public int getEng_total() {
+		return eng_total;
+	}
+	public void setEng_total(int eng_total) {
+		this.eng_total = eng_total;
+	}
 	public String getEng_id() {
 		return eng_id;
 	}

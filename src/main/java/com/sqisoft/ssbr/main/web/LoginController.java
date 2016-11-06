@@ -1,3 +1,12 @@
+/*******************************************************
+ * 
+ * 2016.07.18 SQISOFT TaeHoon Kim
+ * Copyright(c) All Right Reserved
+ * 
+ * Description	:	로그인을 컨트롤
+ * Doc author	:	TaeHoon Kim
+ * 
+ *******************************************************/
 package com.sqisoft.ssbr.main.web;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,7 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.sqisoft.ssbr.member.service.MemberService;
 import com.sqisoft.ssbr.member.vo.MemberVO;
-import com.sqisoft.ssbr.util.LoginAttr;
+import com.sqisoft.ssbr.util.Attribute;
 
 @Controller
 public class LoginController{
@@ -47,7 +56,7 @@ public class LoginController{
 	public ModelAndView login(HttpServletRequest request
 							, HttpServletResponse response) {
 		ModelAndView view  = new ModelAndView();
-		if(request.getSession().getAttribute(LoginAttr.MEMBER_ATTR)==null){
+		if(request.getSession().getAttribute(Attribute.MEMBER_ATTR)==null){
 			view.setViewName("/login/login");
 		}
 		else{

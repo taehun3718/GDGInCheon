@@ -15,11 +15,6 @@
 	
 	<!--bean of member Login-->
 	
-	<bean	id="loginController"
-			class="com.sqisoft.ssbr.main.web.LoginController">
-			<property name="memberService" ref="memberService"/>
-	</bean>
-	
 	<bean	id="mainBiz"
 			class="com.sqisoft.ssbr.main.biz.impl.MainBizImpl">
 			<property name="mainDAO" ref="mainDAO"/>

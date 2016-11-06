@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.sqisoft.ssbr.member.vo.MemberVO;
-import com.sqisoft.ssbr.util.LoginAttr;
+import com.sqisoft.ssbr.util.Attribute;
 import com.sqisoft.ssbr.util.SessionStore;
 
 public class SessionListener implements HttpSessionListener{
@@ -21,9 +21,9 @@ public class SessionListener implements HttpSessionListener{
 
 	@Override
 	public void sessionDestroyed(HttpSessionEvent event) {
-		logger.info("SESSION: " + event.getSession().getAttribute(LoginAttr.MEMBER_ATTR));
+		logger.info("SESSION: " + event.getSession().getAttribute(Attribute.MEMBER_ATTR));
 		SessionStore sessionStore = SessionStore.getInstance();
-		MemberVO vo = (MemberVO) event.getSession().getAttribute(LoginAttr.MEMBER_ATTR);
+		MemberVO vo = (MemberVO) event.getSession().getAttribute(Attribute.MEMBER_ATTR);
 		if(vo!=null){
 			sessionStore.removeSession(vo.getId());
 			logger.info("SESSION DESTROYED");

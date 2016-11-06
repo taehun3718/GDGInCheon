@@ -1,4 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--  
+DB에 관련된 기능들이 정의되어 있는 XML
+-->
+
+
+
+
+
+
+
+
 <beans	xmlns="http://www.springframework.org/schema/beans"
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xmlns:tx="http://www.springframework.org/schema/tx"
@@ -22,6 +33,10 @@
 		<property name="checkoutTimeout" value="15000"/>
 		<property name="user" value="root" />
 		<property name="password" value="system" />
+ 		<property name="idleConnectionTestPeriod" value="60" />
+    	<property name="preferredTestQuery" value="SELECT 1" />
+   		<property name="testConnectionOnCheckin" value="true" />
+   		<!--http://areumgury.blogspot.kr/2013/11/dbcp-c3po.html  -->
 	</bean> 
 	<!--  
 	<bean 	id="dataSource"

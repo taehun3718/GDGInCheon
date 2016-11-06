@@ -19,7 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.sqisoft.ssbr.main.service.MainService;
 import com.sqisoft.ssbr.member.service.MemberService;
 import com.sqisoft.ssbr.util.DataParsingUtil;
-import com.sqisoft.ssbr.util.LoginAttr;
+import com.sqisoft.ssbr.util.Attribute;
 import com.sqisoft.ssbr.util.ModelAndViewUtil;
 
 @Controller
@@ -72,7 +72,7 @@ public class MainController {
 		logger.info("User attempts site of virusDownloadMain web page");
 		ModelAndView view = new ModelAndView();
 		view.addObject("vo", new DataParsingUtil().getSophosInfoVO());
-		view.addObject("MemberVO", request.getSession().getAttribute(LoginAttr.MEMBER_ATTR));
+		view.addObject("MemberVO", request.getSession().getAttribute(Attribute.MEMBER_ATTR));
 		view.setViewName("main/virusFileCheck");
 		return view;
 	}
@@ -89,7 +89,7 @@ public class MainController {
 		ModelAndView view = new ModelAndView();
 		view.setViewName("main/ssbizMain");
 		view.addObject("MemberVO"
-				, request.getSession().getAttribute(LoginAttr.MEMBER_ATTR));
+				, request.getSession().getAttribute(Attribute.MEMBER_ATTR));
 
 		return view;
 	}
@@ -106,7 +106,7 @@ public class MainController {
 		ModelAndView view = new ModelAndView();
 		view.setViewName("main/productSSBR");
 		view.addObject("MemberVO"
-				, request.getSession().getAttribute(LoginAttr.MEMBER_ATTR));
+				, request.getSession().getAttribute(Attribute.MEMBER_ATTR));
 		return view;
 	}
 	
@@ -122,7 +122,7 @@ public class MainController {
 		ModelAndView view = new ModelAndView();
 		view.setViewName("main/maintenance");
 		view.addObject("MemberVO"
-				, request.getSession().getAttribute(LoginAttr.MEMBER_ATTR));
+				, request.getSession().getAttribute(Attribute.MEMBER_ATTR));
 		return view;
 	}
 	

@@ -13,6 +13,7 @@
 		FROM	ENG_MGNT
 	</select>
 	
+	
 	<resultMap type="EngineerVO" id="engineerMap">
 		<result property="eng_seqNo"		column="eng_seqNo"/>
 		<result property="eng_id"			column="eng_id"/>

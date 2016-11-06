@@ -35,10 +35,10 @@ public class MeasuringInterceptor extends HandlerInterceptorAdapter{
 		//--> 총 처리시간을 구한다.
 		long processedTime = currentTime - beginTime;
 		//이렇게 하면 웹 페이제에서 요청하는 처리 시간을 구할 수 있음
-//		logger.info("request Remote Host:" + request.getRemoteHost());
-//		logger.info("request Remote Port:" + request.getRemotePort());
-//		logger.info("request Remote User:" + request.getRemoteUser());
-//		logger.info("request Remote Addr:" + request.getRemoteAddr());
+		logger.info("request Remote Host:" + request.getRemoteHost());
+		logger.info("request Remote Port:" + request.getRemotePort());
+		logger.info("request Remote User:" + request.getRemoteUser());
+		logger.info("request Remote Addr:" + request.getRemoteAddr());
 //		logger.info("URL:" + request.getRequestURI());
 //		logger.info("처리시간: " + getPaddingFormat(processedTime));
 		

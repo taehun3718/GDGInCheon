@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import com.sqisoft.ssbr.util.LoginAttr;
+import com.sqisoft.ssbr.util.Attribute;
 
 
 public class LoginInterceptor extends HandlerInterceptorAdapter{
@@ -20,8 +20,8 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 							, Object handler) throws Exception {
 		
 		logger.info("preHandle");
-		if(request.getSession().getAttribute(LoginAttr.MEMBER_ATTR)==null){
-			logger.info("get Login/" + request.getSession().getAttribute(LoginAttr.MEMBER_ATTR));
+		if(request.getSession().getAttribute(Attribute.MEMBER_ATTR)==null){
+			logger.info("get Login/" + request.getSession().getAttribute(Attribute.MEMBER_ATTR));
 			response.sendRedirect("/ssbrBiz/requiredLogin");
 			return false;
 		}

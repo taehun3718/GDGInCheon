@@ -25,6 +25,81 @@
 				, isDeleteYN
 		FROM	MemberInfo
 		WHERE	id_pk = #{id}
-		AND		pwd = #{pwd}
+		AND		pwd = sha2(#{pwd}, 256)
 	</select>
+	
+	<select id="checkDuplicateUserID"
+			parameterType="string"
+			resultType="_int">
+		SELECT	COUNT(1)
+		FROM	ENG_MGNT
+		WHERE	eng_id = #{eng_id}	
+	</select>
+	
+	<select id="engineerListPage" parameterType="EngineerSearchVO" resultMap="engineerMap">
+		<!-- paging query : http://blog.naver.com/lcsco/120154971144  -->
+		SELECT eng_seqNo
+				, eng_id
+				, eng_nm
+				, eng_rank
+				, eng_crdt
+		FROM (
+			SELECT @NO := @NO + 1 AS ROWNUM, A.*
+			FROM
+			(
+			  SELECT
+			    eng_seqNo
+				, eng_id
+				, eng_nm
+				, eng_rank
+				, eng_crdt
+			    FROM ENG_MGNT
+			    <if test='searchType == 1'>
+					WHERE eng_nm like '%' #{searchKeyword} '%'
+				</if>
+				
+				<if test='searchType == 2'>
+					WHERE eng_id like '%' #{searchKeyword} '%'
+				</if>
+			    
+			    
+			  ) A,
+			  ( SELECT @NO := 0) B 
+			) C
+		WHERE C.ROWNUM BETWEEN #{paging.startArticleNumber} AND #{paging.endArticleNumber}
+		
+		
+	</select>
+	
+	<resultMap type="EngineerVO" id="engineerMap">
+		<result property="eng_seqNo"		column="eng_seqNo"/>
+		<result property="eng_id"			column="eng_id"/>
+		<result property="eng_nm"			column="eng_nm"/>
+		<result property="eng_rank"			column="eng_rank"/>
+		<result property="eng_crdt"			column="eng_crdt"/>
+	</resultMap>
+	
+	<select id="engineerCount" 
+			parameterType="EngineerSearchVO" 
+			resultType="_int">
+			
+		<if test='searchType == 1'>
+			SELECT	COUNT(*)
+			FROM	ENG_MGNT
+			WHERE 	eng_nm like '%' #{searchKeyword} '%'
+		</if>
+		
+		<if test='searchType == 2'>
+			SELECT	COUNT(*)
+			FROM	ENG_MGNT
+			WHERE 	eng_id like '%' #{searchKeyword} '%'
+		</if>
+		
+		<if test='searchType !=1 and searchType !=2'>
+			SELECT	COUNT(*)
+			FROM	ENG_MGNT
+		</if>
+	
+	</select>
+	
 </mapper>

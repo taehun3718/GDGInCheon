@@ -30,9 +30,9 @@
 	     <div class="collapse navbar-collapse">
 	         <ul class="nav navbar-nav navbar-right">
 	             <li class="active"><a href="./ssbizMain">대시보드</a></li>
-	             <li><a href="./ssBizMaintence">유지보수 관리</a></li>
-	             <li><a href="./ssBizEngineer">엔지니어 관리</a></li>
-	             <li><a href="#">Contact</a></li>
+	             <li><a href="./ssBizInventoryList">재고 관리</a></li>
+	             <!--  <li><a href="./ssBizEngineer">엔지니어 관리</a></li>
+	             <li><a href="#">Contact</a></li>-->
 	             <!--   계정에 이미 로그인이 되 있으면 사용자 이름 및 환영 메세지  
 	             		계정에 로그인이 되 있지 않으면 로그인 페이지로 이동-->
 	             <c:choose>
