@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+				"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+				
+<mapper namespace="inventoryDAO">
+	
+	<select id="inventoryCatetoryList" parameterType="InventoryCategoryVO" resultMap="inventoryCatetoryMap">
+		SELECT	inventCatSeqno
+				, inventCatName
+				, inventCatCode
+		FROM	InventoryCategory
+	</select>
+	
+	<resultMap type="InventoryCategoryVO" id="inventoryCatetoryMap">
+		<result property="inventCatSeqno"		column="inventCatSeqno"/>
+		<result property="inventCatName"		column="inventCatName"/>
+		<result property="inventCatName"		column="inventCatName"/>
+	</resultMap>
+	
+	<insert id="insertInventory" parameterType="InventoryInfoVO">
+		INSERT INTO InventoryInfo (
+			inventCategory
+			,inventName
+			,inventNum
+			,inventMemo
+			,inventUpdt
+		) 
+		VALUES ( 
+				#{inventCategory}
+			   	, #{inventName}
+				, #{inventNum}
+				, #{inventMemo}
+				, now()
+		)
+	</insert>
+	
+	<select id="inventoryListPage" parameterType="InventorySearchVO" resultMap="inventoryMap">
+		<!-- paging query : http://blog.naver.com/lcsco/120154971144  -->
+		SELECT inventSeqno
+				, inventName
+				, inventCategory
+				, inventNum
+				, inventMemo 
+				, inventUpdt
+		FROM (
+			SELECT @NO := @NO + 1 AS ROWNUM, A.*
+			FROM
+			(
+			  SELECT
+			    inventSeqno
+				, inventName
+				, inventCategory
+				, inventNum
+				, inventMemo 
+				, inventUpdt
+			    FROM InventoryInfo
+			    WHERE 1=1
+			    <if test='searchType == 1'>
+					AND inventName like '%' #{searchKeyword} '%'
+				</if>
+				
+				<if test='searchType == 2'>
+					AND inventCategory like '%' #{searchKeyword} '%'
+				</if>
+				
+				<if test='searchType == 3'>
+					AND inventMemo like '%' #{searchKeyword} '%'
+				</if>
+					AND inventDeleteYN!='Y'
+				ORDER BY inventSeqno desc
+			  ) A,
+			  ( SELECT @NO := 0) B 
+			) C
+		WHERE C.ROWNUM BETWEEN #{paging.startArticleNumber} AND #{paging.endArticleNumber}
+		ORDER BY inventSeqno desc
+	</select>
+	
+	<select id="inventoryCount" 
+			parameterType="InventorySearchVO" 
+			resultType="_int">
+			
+		<if test='searchType == 1'>
+			SELECT	COUNT(*)
+			FROM	InventoryInfo
+			WHERE 	inventName like '%' #{searchKeyword} '%'
+			AND 	inventDeleteYN!='Y'
+		</if>
+		
+		<if test='searchType == 2'>
+			SELECT	COUNT(*)
+			FROM	InventoryInfo
+			WHERE 	inventCategory like '%' #{searchKeyword} '%'
+			AND 	inventDeleteYN!='Y'
+		</if>
+		
+		<if test='searchType == 3'>
+			SELECT	COUNT(*)
+			FROM	InventoryInfo
+			WHERE 	inventMemo like '%' #{searchKeyword} '%'
+			AND 	inventDeleteYN!='Y'
+		</if>
+		
+		<if test='searchType !=1 and searchType !=2 and searchType !=3'>
+			SELECT	COUNT(*)
+			FROM	InventoryInfo
+			WHERE 	1=1
+			AND 	inventDeleteYN!='Y'
+		</if>
+	
+	</select>
+	
+	<resultMap type="InventoryInfoVO" 	id="inventoryMap">
+	
+		<result property="inventSeqno"		column="inventSeqno"/>
+		<result property="inventCategory"	column="inventCategory"/>
+		<result property="inventName"		column="inventName"/>
+		<result property="inventNum"		column="inventNum"/>
+		<result property="inventMemo"		column="inventMemo"/>
+		<result property="inventUpdt"		column="inventUpdt"/>
+		
+	</resultMap>
+	
+	
+	<update id="inventoryDelete" parameterType="InventoryInfoVO">
+	UPDATE	InventoryInfo
+	SET		inventDeleteYN  = 'Y'
+	WHERE	inventSeqno = #{inventSeqno }
+	</update>
+	
+	<update id="inventoryUpdate" parameterType="InventoryInfoVO">
+	UPDATE	InventoryInfo
+	SET		inventName  = #{inventName }
+			,	inventNum	= #{inventNum  }
+			,	inventMemo  = #{inventMemo }
+			,	inventUpdt	= now()
+	WHERE	inventSeqno = #{inventSeqno }
+	</update>
+	
+</mapper>
